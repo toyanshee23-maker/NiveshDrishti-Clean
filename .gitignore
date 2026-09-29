@@ -8,6 +8,10 @@ dist
 tmp
 out-tsc
 *.tsbuildinfo
+__pycache__/
+*.py[cod]
+.venv/
+.streamlit/secrets.toml
 .expo
 .expo-shared
 
