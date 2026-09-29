@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 42 38% 96%;
+  --foreground: 204 25% 15%;
+  --border: 36 20% 86%;
+  --input: 36 20% 83%;
+  --ring: 163 53% 38%;
+  --card: 42 45% 99%;
+  --card-foreground: 204 25% 15%;
+  --card-border: 37 25% 87%;
+  --popover: 42 45% 99%;
+  --popover-foreground: 204 25% 15%;
+  --primary: 163 53% 32%;
+  --primary-foreground: 42 45% 99%;
+  --secondary: 35 26% 91%;
+  --secondary-foreground: 204 25% 19%;
+  --muted: 40 24% 92%;
+  --muted-foreground: 202 13% 43%;
+  --accent: 20 94% 58%;
+  --accent-foreground: 24 38% 15%;
+  --destructive: 5 70% 49%;
+  --destructive-foreground: 42 45% 99%;
+  --app-font-sans: 'Manrope', sans-serif;
+  --app-font-mono: 'DM Mono', monospace;
+  --app-font-display: 'Space Grotesk', sans-serif;
+  --radius: 0.75rem;
+}
+
+* { box-sizing: border-box; }
+html { background: hsl(var(--background)); }
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 82% -10%, rgba(255, 117, 68, .09), transparent 30rem),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--app-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+.font-display { font-family: var(--app-font-display); }
+.font-mono { font-family: var(--app-font-mono); }
+.noise::after {
+  content: '';
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  pointer-events: none;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+}
+.fade-in { animation: fade-in .45s ease both; }
+.rise-in { animation: rise-in .5s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+.stagger-1 { animation-delay: .06s } .stagger-2 { animation-delay: .12s } .stagger-3 { animation-delay: .18s } .stagger-4 { animation-delay: .24s }
+.map-grid {
+  background-image: linear-gradient(rgba(28, 93, 78, .10) 1px, transparent 1px), linear-gradient(90deg, rgba(28, 93, 78, .10) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+.heat-map {
+  background:
+    radial-gradient(circle at 27% 28%, rgba(245, 119, 51, .74) 0 4%, rgba(245, 119, 51, .2) 11%, transparent 25%),
+    radial-gradient(circle at 63% 57%, rgba(238, 84, 50, .8) 0 5%, rgba(245, 119, 51, .19) 16%, transparent 29%),
+    radial-gradient(circle at 79% 23%, rgba(242, 165, 55, .58) 0 4%, rgba(242, 165, 55, .16) 15%, transparent 25%),
+    linear-gradient(145deg, #d9e7dc, #f0d8b3 60%, #d8e0cc);
+}
+.map-street { position: absolute; height: 2px; background: rgba(255,255,255,.65); transform-origin: left center; }
+.hotspot { transition: transform .2s ease, box-shadow .2s ease; }
+.hotspot:hover, .hotspot.selected { transform: scale(1.15); box-shadow: 0 0 0 7px rgba(255,255,255,.45), 0 0 0 9px rgba(224,91,44,.25); }
+.range-accent { accent-color: hsl(var(--accent)); }
+@media (max-width: 767px) {
+  .mobile-scroll { overflow-x: auto; scrollbar-width: none; }
+  .mobile-scroll::-webkit-scrollbar { display: none; }
+}

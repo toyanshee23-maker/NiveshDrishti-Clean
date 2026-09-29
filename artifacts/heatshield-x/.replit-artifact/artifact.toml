@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "HeatShield-X"
+description = "An interactive municipal decision-support prototype that turns urban heat data into prioritized, feasible, budget-aware interventions."
+version = "1.0.0"
+id = "artifacts/heatshield-x"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18257
+
+[services.development]
+run = "pnpm --filter @workspace/heatshield-x run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/heatshield-x", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/heatshield-x/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18257"
+BASE_PATH = "/"
