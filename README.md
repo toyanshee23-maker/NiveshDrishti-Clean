@@ -24,6 +24,27 @@
 * **Data Processing:** Pandas, Python standard libraries
 * **Deployment:** Streamlit Cloud
 
+Install Dependencies:
+Ensure you have Python installed, then install the required packages:
+
+Bash
+pip install streamlit pandas google-genai
+Set Up Your API Key:
+Create your secrets file (.streamlit/secrets.toml):
+
+Ini, TOML
+GEMINI_API_KEY = "your_google_ai_studio_api_key_here"
+Run the Application:
+
+Bash
+streamlit run APP.py
+🌐 Live Deployment
+Live App URL: View Deployed Application
+
+Demo Video: Watch Walkthrough Video
+
+
+Save this file as `README.md` in your project folder, run a quick `git add README.md`, commit your changes, and push them to your repository. It will give your project a professional, competition-ready presentation for the judges!
 ---
 
 ## ⚙️ Local Setup & Installation
