@@ -389,7 +389,7 @@ def validate_pincode(pincode: str) -> bool:
 
 
 def resolve_api_key() -> tuple[str | None, str | None]:
-    """Prefer managed Streamlit secrets, then deployment environment, then UI input."""
+    """Read the owner-managed Gemini key from Streamlit secrets or the server environment."""
     try:
         cloud_key = st.secrets.get("GEMINI_API_KEY")
     except StreamlitSecretNotFoundError:
@@ -397,10 +397,9 @@ def resolve_api_key() -> tuple[str | None, str | None]:
     if isinstance(cloud_key, str) and cloud_key.strip():
         return cloud_key.strip(), "Streamlit secret"
 
-    for variable in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
-        environment_key = os.environ.get(variable)
-        if environment_key and environment_key.strip():
-            return environment_key.strip(), f"{variable} environment variable"
+    environment_key = os.environ.get("GEMINI_API_KEY")
+    if environment_key and environment_key.strip():
+        return environment_key.strip(), "GEMINI_API_KEY environment variable"
     return None, None
 
 
@@ -2066,19 +2065,6 @@ with st.sidebar:
             color="green",
         )
     else:
-        api_key = st.text_input(
-            "Enter Google AI Studio API key",
-            type="password",
-            help=(
-                "For deployments, configure GEMINI_API_KEY in Streamlit secrets. "
-                "Locally, set GEMINI_API_KEY or GOOGLE_API_KEY in the environment."
-            ),
-            key="gemini_api_key",
-        ).strip()
-    if api_key:
-        if not configured_api_key:
-            st.badge("API key entered securely", icon=":material/lock:", color="green")
-    else:
         st.badge(
             "Gemini is inactive · demo and dashboard remain available",
             icon=":material/key:",
@@ -2150,9 +2136,9 @@ if evaluation_mode:
             st.error(f"Evaluation pipeline stopped: {exc}")
     if not api_key:
         st.warning(
-            "Gemini is not configured. Add GEMINI_API_KEY in Streamlit secrets or enter a key "
-            "in the sidebar to activate live AI analysis. The synthetic demo, dashboard, and "
-            "memo preview remain available without a key."
+            "Gemini is not configured. An administrator must set GEMINI_API_KEY in the "
+            "deployment's server-side secrets or environment to activate live AI analysis. "
+            "The synthetic demo, dashboard, and memo preview remain available without a key."
         )
 
 render_executive_metrics()

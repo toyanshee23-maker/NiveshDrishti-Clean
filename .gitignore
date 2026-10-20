@@ -11,6 +11,9 @@ out-tsc
 __pycache__/
 *.py[cod]
 .venv/
+.env
+.env.*
+!.env.example
 .streamlit/secrets.toml
 .expo
 .expo-shared

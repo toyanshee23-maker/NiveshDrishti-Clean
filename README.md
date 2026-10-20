@@ -10,7 +10,11 @@ $env:GEMINI_API_KEY = "your-google-ai-studio-key"
 uv run streamlit run APP.py
 ```
 
-For Streamlit Community Cloud, configure `GEMINI_API_KEY` under **App settings → Secrets**. At runtime the app resolves credentials in this order: Streamlit secret `GEMINI_API_KEY`, environment variable `GEMINI_API_KEY`, environment variable `GOOGLE_API_KEY`, then the password field in the sidebar. When a managed secret or environment key is present, the key input is omitted. The app uses the official `google-genai` SDK, Gemini 2.5 Flash for text/audio/image intake, and Gemini 3.1 Pro Preview for sequential policy reasoning. Gemini 2.5 Pro is no longer available to new API users. If Pro is unavailable due to quota or a temporary 503, the agent transparently falls back to Gemini 2.5 Flash, then Gemini 3 Flash Preview if Flash is temporarily unavailable; the actual model is shown in each result and recorded in the audit log. Temporary 5xx errors are retried once.
+For local `.env` workflows, copy `.env.example` to `.env` and fill in the key; the app does not load `.env` itself, so export the variable in your shell or use a local process manager. `.env` is ignored by Git. Never commit or paste API keys into source files or chat.
+
+For Streamlit Community Cloud, open the specific app's **Manage app → Settings → Secrets** and add the server-side TOML entry `GEMINI_API_KEY = "your-google-ai-studio-key"`, then reboot the app. The app reads the key only from Streamlit secrets or the server environment and never asks app users to enter one. If absent, AI actions remain disabled while the synthetic demo, dashboard, and draft memo remain available.
+
+The app uses the official `google-genai` SDK, Gemini 2.5 Flash for text/audio/image intake, and Gemini 3.1 Pro Preview for sequential policy reasoning. Gemini 2.5 Pro is no longer available to new API users. If Pro is unavailable due to quota or a temporary 503, the agent transparently falls back to Gemini 2.5 Flash, then Gemini 3 Flash Preview if Flash is temporarily unavailable; the actual model is shown in each result and recorded in the audit log. Temporary 5xx errors are retried once.
 
 If no key is configured, Gemini actions remain disabled and an administrator-facing warning is shown; the synthetic demo, dashboard, and draft memo remain available. The app does not stop the entire session for missing credentials.
 
