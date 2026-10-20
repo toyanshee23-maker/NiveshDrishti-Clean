@@ -2053,6 +2053,7 @@ def render_collector_dashboard() -> None:
 
 initialize_session()
 configured_api_key, api_key_source = resolve_api_key()
+api_key = configured_api_key
 with st.sidebar:
     st.title("NiveshDrishti AI", anchor=False)
     st.caption("Government administrator portal · Municipal intelligence")
